@@ -51,19 +51,19 @@ From the above characteristic table, we can directly write the next state equati
 */
 
 ```
-module tflipflop( input clk, rst_n, input t,
-output reg q,
-output q_bar);
-always@(posedge clk)
+module t_ff_ (t, clk, rst, q);
+  input t, clk, rst;
+  output reg q;
+
+  always @(posedge clk or posedge rst) 
 begin
-if(!rst_n)
-q<=0;
-else
-begin
-q<=(t?~q:q);
-end
-end
-assign q_bar = ~q;
+    if (rst)
+      q <= 0; // Reset the flip-flop
+    else if (t==0)
+      q <= q; 
+     else
+        q<=~q;
+  end
 endmodule
 ```
 **RTL LOGIC FOR FLIPFLOPS**
